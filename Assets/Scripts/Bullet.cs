@@ -16,13 +16,12 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
         var normal = col.contacts[0].normal; // Нормаль к поверхности стены
-        var startSpeed = rigidbody2d.velocity.magnitude;
 
         // Вычисляем новое направление движения пули
         var reflect = Vector2.Reflect(rigidbody2d.velocity, normal);
 
         transform.right = reflect.normalized;
 
-        rigidbody2d.velocity = transform.right * startSpeed;
+        rigidbody2d.velocity = transform.right * speed;
     }
 }
