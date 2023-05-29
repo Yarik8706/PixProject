@@ -41,3 +41,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ram
+    uniqueID: 4249482785
+    locked: 0
