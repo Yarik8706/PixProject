@@ -13,7 +13,7 @@ public class EnemyRam_Move : MonoBehaviour
     private void Update()
     {
         CheckPlayerReach();
-        MovingRamOnPOints();
+        MoveOnPoint();
         Debug.DrawLine(transform.position, playerTransform.position);
     }
 
@@ -34,41 +34,46 @@ public class EnemyRam_Move : MonoBehaviour
     }
 
 
-    private void MovingRamOnPOints()
+    private void MoveOnPoint()
     {
-        if (curectPoint < points.Length)// перемещение ram по точкам в пространстве
+        if (curectPoint < points.Length)
         {
             Transform curectOnePoint = points[curectPoint];
 
-            Vector3 direction = (curectOnePoint.position - transform.position).normalized;
+            Vector3 direction;
 
-            float angel = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;// слежение за точкой куда он летит
-
-            transform.rotation = Quaternion.AngleAxis(angel, Vector3.forward);
-
-            Vector3 newPosition = transform.position + direction * moveSpeed * Time.deltaTime;
-
-            transform.position = newPosition;
-
-            if (Vector3.Distance(transform.position, curectOnePoint.position) < 0.1f)
-            {
-                curectPoint = RandomPoints();
-                if (curectPoint >= points.Length)
-                {
-                    curectPoint = 0;
-                }
-            }
             if (CheckPlayerReach())
             {
-                moveSpeed = 0;
-                Vector3 playerDistance = (playerTransform.position - transform.position).normalized;
-                float playerAngel = Mathf.Atan2(playerDistance.y, playerDistance.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.AngleAxis(playerAngel, Vector3.forward);
+                direction = (playerTransform.position - transform.position).normalized;
+            }
 
+            else
+            {
+                direction = (curectOnePoint.position - transform.position).normalized;
+            }
+
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            Vector3 newPositon= transform.position + direction * moveSpeed * Time.deltaTime;
+            transform.position = newPositon;
+            if (CheckPlayerReach())
+            {
+                float distanseToPoints = Vector3.Distance(transform.position, playerTransform.position);
+                if (distanseToPoints <= 0.1f)
+                {
+
+                }
             }
             else
             {
-                moveSpeed = 5f;
+                if(Vector3.Distance(transform.position, curectOnePoint.position)< 0.1f)
+                {
+                    curectPoint = RandomPoints();
+                    if(curectPoint >= points.Length)
+                    {
+                        curectPoint = 0;
+                    }
+                }
             }
         }    
     }
