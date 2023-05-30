@@ -4,44 +4,32 @@ using UnityEngine;
 
 public class EnemyRam_Move : MonoBehaviour
 {
-    public Transform[] points;
-    public Transform targetPlayer;
-    public LineRenderer lineRenderer;
-    public float moveRamSpeed = 5f;
+    [SerializeField] private Transform[] points;
+    [SerializeField] private Transform playerTransform;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private LayerMask blockingLayer;
     private int curectPoint = 0;
-
-    private void Start()
-    {
-        lineRenderer.positionCount = 2;
-    }
 
     private void Update()
     {
-        CheackRenderLine();
+        CheckPlayerReach();
         MovingRamOnPOints();
-        Debug.DrawLine(transform.position, targetPlayer.position); // проводит линию между Ram и игроком
+        Debug.DrawLine(transform.position, playerTransform.position);
     }
 
 
-    private void CheackRenderLine()//проверка видет ли противник , игрока , проверка производитья через  Line render 
-    {
-        Vector2 ramPosition = transform.position;
-        Vector2 playerPosition = targetPlayer.position;
-
-        int layerMask = ~(1 << gameObject.layer); // Игнорировать слой объекта EnemyRam_Move
-
-        RaycastHit2D hit = Physics2D.Raycast(ramPosition, playerPosition - ramPosition, Vector2.Distance(ramPosition, playerPosition), layerMask);
+    private bool CheckPlayerReach()
+    {        
+        RaycastHit2D hit = Physics2D.Linecast(playerTransform.position, transform.position, blockingLayer);
 
 
-        if (hit.collider != null && hit.collider.gameObject == targetPlayer.gameObject)
+        if (hit.collider != null)
         {
-            lineRenderer.startColor = Color.green;
-            lineRenderer.endColor = Color.green;
+            return false;
         }
         else
         {
-            lineRenderer.startColor = Color.red;
-            lineRenderer.endColor = Color.red;
+            return true;
         }
     }
 
@@ -58,7 +46,7 @@ public class EnemyRam_Move : MonoBehaviour
 
             transform.rotation = Quaternion.AngleAxis(angel, Vector3.forward);
 
-            Vector3 newPosition = transform.position + direction * moveRamSpeed * Time.deltaTime;
+            Vector3 newPosition = transform.position + direction * moveSpeed * Time.deltaTime;
 
             transform.position = newPosition;
 
@@ -70,42 +58,20 @@ public class EnemyRam_Move : MonoBehaviour
                     curectPoint = 0;
                 }
             }
-            if (CheckRenderedHit())
+            if (CheckPlayerReach())
             {
-                moveRamSpeed = 0;
-                Vector3 playerDistance = (targetPlayer.position - transform.position).normalized;
+                moveSpeed = 0;
+                Vector3 playerDistance = (playerTransform.position - transform.position).normalized;
                 float playerAngel = Mathf.Atan2(playerDistance.y, playerDistance.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.AngleAxis(playerAngel, Vector3.forward);
 
             }
             else
             {
-                moveRamSpeed = 5f;
+                moveSpeed = 5f;
             }
         }    
     }
-    private bool CheckRenderedHit()//проверка на обнаружение игрока 
-    {
-        Vector2 ramPosition = transform.position;
-        Vector2 playerPosition = targetPlayer.position;
-
-        int layerMask = ~(1 << gameObject.layer);
-
-        RaycastHit2D hit = Physics2D.Raycast(ramPosition, playerPosition - ramPosition, Vector2.Distance(ramPosition, playerPosition), layerMask);
-        if(hit.collider != null && hit.collider.gameObject == targetPlayer.gameObject)
-        {
-            lineRenderer.startColor = Color.green;
-            lineRenderer.endColor = Color.green;
-            return true; // Обнаружен игрок
-        }
-        else
-        {
-            lineRenderer.startColor = Color.red;
-            lineRenderer.endColor = Color.red;
-            return false; // Игрок не обнаружен
-        }
-    }
-
 
     private int RandomPoints()
     {
