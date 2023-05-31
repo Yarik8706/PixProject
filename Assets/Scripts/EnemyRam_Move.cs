@@ -9,12 +9,12 @@ public class EnemyRam_Move : MonoBehaviour
     [SerializeField] private LayerMask blockingLayer;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotateSpeed = 10f;
-    [SerializeField] private float accelerationSpeed = 10f;// more than moveSpeed :)))) this for me Kola
+    [SerializeField] private float attackSpeed = 10f;// more than moveSpeed :)))) this for me Kola
     [SerializeField] private float stopDistance = 1f;
     private float accelerationStart;
     private bool isAccelerating = false;
     private int curectPoint = 0;
-
+	private bool isAttack;
 
 
     private void Update()
@@ -45,7 +45,7 @@ public class EnemyRam_Move : MonoBehaviour
 
     private void MoveOnPoint()
     {
-        if (curectPoint < points.Length)
+        if (curectPoint < points.Length && !isAttack)
         {
             Transform curectOnePoint = points[curectPoint];
 
@@ -54,39 +54,27 @@ public class EnemyRam_Move : MonoBehaviour
             if (CheckPlayerReach())
             {
                 direction = (playerTransform.position - transform.position).normalized;
-                float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
-
-                if (distanceToPlayer <= stopDistance)
-                {
-                    transform.position = playerTransform.position - direction * stopDistance;
-
-                    isAccelerating = true;
-                    accelerationStart = Time.time;
-
-                    if (isAccelerating && Time.time - accelerationSpeed >= 3f)
-                    {
-                        Debug.Log("Yes");
-                        Vector3 newPosition = playerTransform.position - direction * stopDistance;
-                        transform.position = Vector3.MoveTowards(transform.position, newPosition, accelerationSpeed * Time.deltaTime);
-                        return;
-                    }
-                }
-
             }
-
             else
             {
                 direction = (curectOnePoint.position - transform.position).normalized;
             }
-
+			
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+            transform.position = transform.position + direction * moveSpeed * Time.deltaTime;
+			
+			float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
-            Vector3 newPositon= transform.position + direction * moveSpeed * Time.deltaTime;
-            transform.position = newPositon;
-
+            if (distanceToPlayer <= stopDistance)
+            {
+                transform.position = playerTransform.position - direction * stopDistance;
+				if (angel == 0) {
+					StartCoroutine(AttackCoroutine(playerTransform.position + direction * 3))
+				}
+            }
 
             if (CheckPlayerReach())
             {
@@ -109,7 +97,16 @@ public class EnemyRam_Move : MonoBehaviour
             }
         }    
     }
-
+	
+	private IEnumerator AttackCoroutine(Vector3 newPosition)
+	{
+		isAttack = true;
+		yield return new WaitForSeconds(0.7f);
+		while (transform.position != newPosition):
+            transform.position = Vector3.MoveTowards(transform.position, newPosition, attackSpeed * Time.deltaTime);
+			yield return null;
+		isAttack = false;	
+	}
 
     private int RandomPoints()
     {
