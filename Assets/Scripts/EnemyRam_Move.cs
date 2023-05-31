@@ -6,9 +6,16 @@ public class EnemyRam_Move : MonoBehaviour
 {
     [SerializeField] private Transform[] points;
     [SerializeField] private Transform playerTransform;
-    [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private LayerMask blockingLayer;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float rotateSpeed = 10f;
+    [SerializeField] private float accelerationSpeed = 10f;// more than moveSpeed :)))) this for me Kola
+    [SerializeField] private float stopDistance = 1f;
+    private float accelerationStart;
+    private bool isAccelerating = false;
     private int curectPoint = 0;
+
+
 
     private void Update()
     {
@@ -19,18 +26,20 @@ public class EnemyRam_Move : MonoBehaviour
 
 
     private bool CheckPlayerReach()
-    {        
-        RaycastHit2D hit = Physics2D.Linecast(playerTransform.position, transform.position, blockingLayer);
+    {
+        bool playerPeach = false;
+        Vector3 playerDirection = playerTransform.position - transform.position;
+        float angel = Vector3.Angle(transform.right, playerDirection);
 
-
-        if (hit.collider != null)
+        if (angel <= 90)
         {
-            return false;
+            RaycastHit2D hit = Physics2D.Linecast(playerTransform.position, transform.position, blockingLayer);
+            if (hit.collider == null)
+            {
+                return true;
+            }
         }
-        else
-        {
-            return true;
-        }
+        return playerPeach;
     }
 
 
@@ -45,6 +54,24 @@ public class EnemyRam_Move : MonoBehaviour
             if (CheckPlayerReach())
             {
                 direction = (playerTransform.position - transform.position).normalized;
+                float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+
+                if (distanceToPlayer <= stopDistance)
+                {
+                    transform.position = playerTransform.position - direction * stopDistance;
+
+                    isAccelerating = true;
+                    accelerationStart = Time.time;
+
+                    if (isAccelerating && Time.time - accelerationSpeed >= 3f)
+                    {
+                        Debug.Log("Yes");
+                        Vector3 newPosition = playerTransform.position - direction * stopDistance;
+                        transform.position = Vector3.MoveTowards(transform.position, newPosition, accelerationSpeed * Time.deltaTime);
+                        return;
+                    }
+                }
+
             }
 
             else
@@ -53,16 +80,21 @@ public class EnemyRam_Move : MonoBehaviour
             }
 
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+
             Vector3 newPositon= transform.position + direction * moveSpeed * Time.deltaTime;
             transform.position = newPositon;
+
+
             if (CheckPlayerReach())
             {
                 float distanseToPoints = Vector3.Distance(transform.position, playerTransform.position);
-                if (distanseToPoints <= 0.1f)
-                {
-
-                }
+                //if (distanseToPoints <= 0.1f)
+                //{
+                    //
+                //}
             }
             else
             {
@@ -78,13 +110,11 @@ public class EnemyRam_Move : MonoBehaviour
         }    
     }
 
+
     private int RandomPoints()
     {
         System.Random random = new System.Random();
         return random.Next(0, points.Length);
     }
-    private void FindPlayer()
-    {
 
-    }
 }

@@ -129,7 +129,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   playerTransform: {fileID: 0}
-  moveSpeed: 5
+  moveSpeed: 1
   blockingLayer:
     serializedVersion: 2
     m_Bits: 512
+  rotateSpeed: 100

@@ -615,7 +615,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290275563}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.47, y: 1.66, z: 0}
+  m_LocalPosition: {x: -1.07, y: 1.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -790,7 +790,7 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0.6222222
-    width: 0.3546875
+    width: 0.35364586
     height: 0.32962963
   near clip plane: 0.3
   far clip plane: 1000
@@ -960,7 +960,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 577372390}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.06, y: -0.04, z: 0}
+  m_LocalPosition: {x: 1.32, y: 0.63, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -981,7 +981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
-  rotationSpeed: 10
+  rotationSpeed: 20
   playerAnimator: {fileID: 577372394}
   rigidbody2d: {fileID: 577372396}
 --- !u!95 &577372394
@@ -1473,40 +1473,46 @@ PolygonCollider2D:
       - {x: -6, y: -6}
       - {x: 6, y: -6}
       - {x: 6, y: 6}
-    - - {x: -1.8306246, y: -3.2862494}
-      - {x: -2.21875, y: -2.9375}
-      - {x: -2.90625, y: -2.21875}
+    - - {x: -0.73097163, y: -3.4324117}
+      - {x: -1.8306246, y: -3.2862494}
+      - {x: -2.3070192, y: -2.9986095}
+      - {x: -2.7330098, y: -2.6242414}
+      - {x: -3.035259, y: -2.2119598}
       - {x: -3.2963057, y: -1.6035867}
       - {x: -3.3998928, y: -0.8480992}
-      - {x: -3.546306, y: -0.68923974}
-      - {x: -4.3758698, y: -0.74364257}
+      - {x: -3.3871562, y: -0.725406}
+      - {x: -3.546306, y: -0.70960957}
+      - {x: -4.458034, y: -0.71376455}
       - {x: -4.4435887, y: 0.7115227}
-      - {x: -3.375, y: 0.625}
-      - {x: -3.3561964, y: 0.7615764}
+      - {x: -3.36821, y: 0.71326923}
+      - {x: -3.3737774, y: 1.2245355}
       - {x: -3.3294933, y: 1.533833}
       - {x: -3.2729578, y: 1.7000154}
       - {x: -2.9896348, y: 2.3270886}
       - {x: -2.3938117, y: 2.9666772}
       - {x: -1.75, y: 3.3313122}
-      - {x: -0.625, y: 3.3125}
+      - {x: -0.65894973, y: 3.421139}
       - {x: 0.5197957, y: 3.4701028}
       - {x: 0.59374994, y: 3.4182076}
       - {x: 0.6828462, y: 3.4151785}
       - {x: 0.77469003, y: 3.4166906}
       - {x: 0.8958881, y: 3.4126651}
       - {x: 1.0724885, y: 3.3718607}
-      - {x: 1.78125, y: 3.1875}
-      - {x: 2.21875, y: 2.9375}
-      - {x: 2.84375, y: 2.3125}
+      - {x: 1.8559394, y: 3.2825594}
+      - {x: 2.320599, y: 2.9782395}
+      - {x: 2.7359066, y: 2.5842855}
+      - {x: 2.9184394, y: 2.3464499}
+      - {x: 2.959804, y: 2.2926052}
       - {x: 3.2392523, y: 1.8528271}
       - {x: 3.4129786, y: 1.3101517}
       - {x: 3.395502, y: 0.90155363}
       - {x: 3.4092755, y: 0.75067747}
-      - {x: 4.389451, y: 0.7537031}
-      - {x: 4.4244037, y: -0.68515176}
+      - {x: 4.4367943, y: 0.7004417}
+      - {x: 4.4362397, y: -0.71474147}
       - {x: 3.420701, y: -0.71640176}
       - {x: 3.393382, y: -0.7507878}
-      - {x: 3.2523632, y: -1.6882879}
+      - {x: 3.371068, y: -1.3043963}
+      - {x: 3.264199, y: -1.7237955}
       - {x: 3.0763392, y: -2.139593}
       - {x: 3.0587313, y: -2.2100244}
       - {x: 2.949397, y: -2.3917353}
@@ -1514,13 +1520,23 @@ PolygonCollider2D:
       - {x: 1.712969, y: -3.3414052}
       - {x: 0.7731241, y: -3.423593}
       - {x: 0.5690627, y: -3.4424994}
-      - {x: -0.625, y: -3.3125}
-    - - {x: 0.65523994, y: 0.539385}
-      - {x: -0.584605, y: 0.5865125}
+      - {x: -0.42130172, y: -3.434719}
+    - - {x: 0.60342395, y: 0.539385}
+      - {x: 0.47040123, y: 0.5831531}
+      - {x: 0.18204439, y: 0.5853658}
+      - {x: 0.17406493, y: 0.6252602}
+      - {x: -0.16055083, y: 0.63015753}
+      - {x: -0.20486635, y: 0.5779259}
+      - {x: -0.4629767, y: 0.5861482}
+      - {x: -0.643823, y: 0.51248974}
       - {x: -0.8187275, y: 0.231205}
-      - {x: -0.85239, y: -0.21341997}
+      - {x: -0.8227809, y: -0.1986154}
+      - {x: -0.7489349, y: -0.37766337}
       - {x: -0.64418745, y: -0.49898994}
-      - {x: 0.57355237, y: -0.53265244}
+      - {x: -0.16871652, y: -0.61678964}
+      - {x: 0.15438491, y: -0.6185227}
+      - {x: 0.4699204, y: -0.5770662}
+      - {x: 0.64200604, y: -0.50590783}
       - {x: 0.79853, y: -0.26054746}
       - {x: 0.838925, y: 0.21532749}
 --- !u!1 &1185070790
@@ -1779,7 +1795,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1708820416}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.92, y: -2.69, z: 0}
+  m_LocalPosition: {x: -1.26, y: -2.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1928,7 +1944,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1929898715}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.39, y: -0.62, z: 0}
+  m_LocalPosition: {x: 2.155, y: -0.434, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1959,9 +1975,29 @@ PrefabInstance:
     m_TransformParent: {fileID: 1185070791}
     m_Modifications:
     - target: {fileID: 1210089521770122306, guid: 1180d76920e5c4177a1c294ded3aa3ad, type: 3}
+      propertyPath: moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1210089521770122306, guid: 1180d76920e5c4177a1c294ded3aa3ad, type: 3}
+      propertyPath: rotateSpeed
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 1210089521770122306, guid: 1180d76920e5c4177a1c294ded3aa3ad, type: 3}
+      propertyPath: stopDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1210089521770122306, guid: 1180d76920e5c4177a1c294ded3aa3ad, type: 3}
+      propertyPath: isAccelerating
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1210089521770122306, guid: 1180d76920e5c4177a1c294ded3aa3ad, type: 3}
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 577372392}
+    - target: {fileID: 1210089521770122306, guid: 1180d76920e5c4177a1c294ded3aa3ad, type: 3}
+      propertyPath: accelerationSpeed
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1210089521770122306, guid: 1180d76920e5c4177a1c294ded3aa3ad, type: 3}
       propertyPath: points.Array.data[0]
       value: 
