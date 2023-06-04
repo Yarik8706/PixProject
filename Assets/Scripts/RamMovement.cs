@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyRam_Move : MonoBehaviour
+public class RamMovement : MonoBehaviour
 {
     [SerializeField] private Transform[] points;
     [SerializeField] private Transform playerTransform;
@@ -11,8 +12,14 @@ public class EnemyRam_Move : MonoBehaviour
     [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private float attackSpeed = 10f;// more than moveSpeed :)))) this for me Kola
     [SerializeField] private float stopDistance = 1f;
+    private Collider2D _boxCollider2D;
     private int curectPoint = 0;
     private bool isAttack;
+
+    private void Start()
+    {
+        _boxCollider2D = GetComponent<Collider2D>();
+    }
 
 
     private void Update()
@@ -99,7 +106,7 @@ public class EnemyRam_Move : MonoBehaviour
 
     private IEnumerator AttackCoroutine(Vector3 newPosition)
     {
-
+        _boxCollider2D.isTrigger = true;
         isAttack = true;
         yield return new WaitForSeconds(0.7f);
 
@@ -110,6 +117,7 @@ public class EnemyRam_Move : MonoBehaviour
         }
         yield return new WaitForSeconds(5);
         isAttack = false;
+        _boxCollider2D.isTrigger = false;
     }
 
     private int RandomPoints()
@@ -118,23 +126,13 @@ public class EnemyRam_Move : MonoBehaviour
         return random.Next(0, points.Length);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-
-        if (collision.gameObject.tag != "Player")
-        {
-
-            isAttack = false;
-        }
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("BackGrounds")&& collision.gameObject.CompareTag("Player"))
+        if (!col.attachedRigidbody.gameObject.CompareTag("Player"))
         {
             isAttack = false;
         }
     }
-
 }
 
     
