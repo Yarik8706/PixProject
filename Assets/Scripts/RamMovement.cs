@@ -110,11 +110,16 @@ public class RamMovement : MonoBehaviour
         isAttack = true;
         yield return new WaitForSeconds(0.7f);
 
-        while (transform.position != newPosition && isAttack)
+        float distanceToNewPosition = Vector3.Distance(transform.position, newPosition);
+        Vector3 direction = (newPosition - transform.position).normalized;
+
+        while(distanceToNewPosition > 0.1f && isAttack)
         {
-            transform.position = Vector3.MoveTowards(transform.position, newPosition, attackSpeed * Time.deltaTime);
-            yield return new WaitForFixedUpdate();
+            transform.position = transform.position + direction * attackSpeed* Time.deltaTime;
+            distanceToNewPosition = Vector3.Distance(transform.position, newPosition);
+            yield return null;
         }
+
         yield return new WaitForSeconds(5);
         isAttack = false;
         _boxCollider2D.isTrigger = false;
